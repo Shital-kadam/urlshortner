@@ -1,5 +1,4 @@
-from app1.views import xyz, signUp, signin, login, otpVerification, urlshortner, handlingShortUrl
-
+from app1.views import xyz, signUp, signin, login, otpVerification, urlshortner, handlingShortUrl , generateShortURlApi
 """PythonProjectFeb URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,15 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('xyz/', xyz),
+    path('', xyz),
     path('signin/', signin),
     path('signUp', signUp),
     path('login', login),
     path('otpVerification', otpVerification),
     path('urlshortner', urlshortner),
+    path('generateShortURlApi', generateShortURlApi),
+    # path('blog/', include('blog.urls'))
     path('<url>/', handlingShortUrl),
+    path('api/',include('api_apps.urls'))
+
 ]

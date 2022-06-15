@@ -1,5 +1,6 @@
 import string
 
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.db import connection
 from django.core.mail import send_mail
@@ -9,6 +10,10 @@ import random
 
 def xyz(request):
     return render(request, "home.html")
+    #return JsonResponse({"shortUrl": "shortUrl", "response": "success"})
+
+
+
 
 def handlingShortUrl(request, **kwargs):
     url = kwargs.get('url')
@@ -30,7 +35,7 @@ def signUp(request):
     cursor.execute(query1)
     data = cursor.fetchall()
     if len(data) > 0:
-        data = {"email":"Already SignedUP" , "password":""}
+        data = {"email":"Already SignedUP" , "password" : ""}
         return render(request, "first.html", data)
     else:
         otp = random.randint(100000, 999999)
@@ -39,9 +44,9 @@ def signUp(request):
         value2 = (email, psw, strotp)
         cursor.execute(query2, value2)
         print(cursor.rowcount)
-        body = 'Your Otp for our portal you signed up with email ' + email + ' is '  + strotp
-        send_mail('OTP For Verification', body, 'testcodeplanet@gmail.com', ['parth@codeplanet.co.in'])
-        data = {"email":email}
+        body = 'Your Otp for our portal you signed up with email ' + email + ' is ' + strotp
+        send_mail('OTP For Verification', body, 'skfashion2104@gmail.com', ['shitalkadam765@gmail.com'])
+        data = {"email": email}
         return render(request, "signupsuccess.html", data)
 
 # Create your views here.
@@ -54,9 +59,13 @@ def login(request):
     psw = request.POST['psw']
     cursor = connection.cursor()
     values =[email]
-    res = cursor.callproc('signin', values)
-    data = cursor.fetchone()
 
+    # query1="select * from users where email= '" + email + "'"
+    # cursor.execute(query1)
+    # call directly stored pro
+    res = cursor.callproc("signin", values)
+    data = cursor.fetchone()
+    #
     if data is None:
         data = {"email": "Not SignedUP", "password": ""}
         return render(request, "first.html", data)
@@ -137,3 +146,12 @@ def urlshortner(request):
         cursor.execute(query2, value)
         data = {"email": "Your URl is shortne with nano.co/"+shortUrl}
         return render(request, "first.html", data)
+
+
+
+def generateShortURlApi(request):
+    letters = string.ascii_letters + string.digits
+    shortUrl = ''
+    for i in range(6):
+        shortUrl = shortUrl + ''.join(random.choice(letters))
+    return JsonResponse({"shortUrl":shortUrl, "response" : "success"})

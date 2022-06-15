@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from typing import List, Any
 
+import pymysql
+
+pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,8 +29,6 @@ SECRET_KEY = 'django-insecure-jaxg!uwrd=ph$-jt0wdp9@db5d+o%ggalpq6supybe-_du57k1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -37,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'api_apps',
+
 ]
 
 MIDDLEWARE = [
@@ -70,7 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PythonProjectFeb.wsgi.application'
 
 
-# Database
+    # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
@@ -78,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'PythonProjectFeb',
         'USER': 'root',
-        'PASSWORD': 'admin123',
+        'PASSWORD': 'Password@1730',
         'HOST': '127.0.0.1',
         'PORT': '3306'
 
@@ -122,6 +127,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR,'static'),
+)
+
+# STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -129,6 +140,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'skfashion2104@gmail.com'
+EMAIL_HOST_PASSWORD = 'Dream@2023'
 EMAIL_USE_SSL = True
+
+ALLOWED_HOSTS = ['9433-61-2-145-237.in.ngrok.io', 'localhost', '127.0.0.1']
